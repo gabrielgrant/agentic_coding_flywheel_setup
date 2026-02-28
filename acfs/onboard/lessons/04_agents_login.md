@@ -4,15 +4,16 @@
 
 ---
 
-## The Three Agents
+## The Four Agents
 
-You have three powerful coding agents installed:
+You have four powerful coding agents installed:
 
 | Agent | Command | Alias | Company |
 |-------|---------|-------|---------|
 | Claude Code | `claude` | `cc` | Anthropic |
 | Codex CLI | `codex` | `cod` | OpenAI |
 | Gemini CLI | `gemini` | `gmi` | Google |
+| OpenCode | `opencode` | `oc` | Anomaly Co (open source) |
 
 ---
 
@@ -41,6 +42,14 @@ codex --dangerously-bypass-approvals-and-sandbox
 gemini --yolo
 ```
 - YOLO mode (no confirmations)
+
+### `opencode` (OpenCode)
+```bash
+opencode
+```
+- Open source, provider-agnostic agent
+- Works with Claude, OpenAI, Google, or local models
+- Configure your provider in `~/.config/opencode/opencode.json`
 
 ---
 
@@ -97,6 +106,16 @@ gemini
 ```
 Follow the prompts to authenticate with your Google account.
 
+### OpenCode
+
+OpenCode is provider-agnostic: you configure which AI backend it uses via your config file. The first time you run it, OpenCode will guide you through adding a provider:
+
+```bash
+opencode
+```
+
+Or set your API key directly via environment variable (e.g., `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`) and OpenCode will pick it up automatically. For a full list of supported providers, see the [OpenCode docs](https://opencode.ai/docs).
+
 ---
 
 ## Backup Your Credentials!
@@ -107,6 +126,7 @@ After logging in, **immediately** back up your credentials:
 caam backup claude my-main-account
 caam backup codex my-main-account
 caam backup gemini my-main-account
+# Note: OpenCode stores credentials in ~/.local/share/opencode/auth.json
 ```
 
 Now you can switch accounts later with:
@@ -134,6 +154,10 @@ cod "Hello! Please confirm you're working."
 gmi "Hello! Please confirm you're working."
 ```
 
+```bash
+opencode "Hello! Please confirm you're working."
+```
+
 ---
 
 ## Quick Tips
@@ -151,7 +175,7 @@ Let's verify your agents are ready:
 
 ```bash
 # Check which agents are installed
-which claude codex gemini
+which claude codex gemini opencode
 
 # Check your agent credential backups
 caam ls

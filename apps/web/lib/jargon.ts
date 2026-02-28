@@ -355,9 +355,9 @@ export const jargonDictionary: Record<string, JargonTerm> = {
     term: "Gemini CLI",
     short: "Google's AI assistant for your terminal",
     long: "Gemini CLI brings Google's Gemini 3 AI model to your command line, giving you a third AI assistant alongside Claude Code and Codex. Like the others, it runs in your terminal and can help with coding questions, generate code, explain concepts, and assist with development tasks. Gemini 3 is Google's latest AI system, offering capabilities that sometimes differ from what Claude Opus 4.5 or GPT-5.2 provide. Having multiple AI assistants is like having multiple experts with different backgrounds; they might approach problems differently or have different knowledge.",
-    analogy: "If Claude Code and Codex are two brilliant developers on your team, Gemini CLI is a third developer from a completely different company with a different training background. They've read different things, excel at different problems, and sometimes one will have an insight the others miss. Having all three available means you can get diverse perspectives.",
-    why: "Different AI models genuinely have different strengths. Some are better at explaining complex concepts, some at generating creative solutions, some at careful analysis. The Agent Flywheel installs all three major AI assistants so you can choose the best one for each situation, or compare their approaches when facing a tricky problem.",
-    related: ["ai-agents", "claude-code", "codex"],
+    analogy: "If Claude Code and Codex are two brilliant developers on your team, Gemini CLI is a third developer from a completely different company with a different training background. They've read different things, excel at different problems, and sometimes one will have an insight the others miss. Having all four available (including OpenCode) means you can get diverse perspectives.",
+    why: "Different AI models genuinely have different strengths. Some are better at explaining complex concepts, some at generating creative solutions, some at careful analysis. The Agent Flywheel installs all four AI coding agents so you can choose the best one for each situation, or compare their approaches when facing a tricky problem.",
+    related: ["ai-agents", "claude-code", "codex", "opencode"],
   },
 
   // ═══════════════════════════════════════════════════════════════

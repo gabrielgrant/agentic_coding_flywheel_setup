@@ -131,7 +131,7 @@ bv                              # Check tasks
 br ready                        # See what's ready to work on
 
 # 2. Start your agents
-ntm spawn myproject --cc=2 --cod=1
+ntm spawn myproject --cc=2 --cod=1 --oc=1
 
 # 3. Set context
 cm context "Implementing user authentication" --json
@@ -184,7 +184,7 @@ acfs newproj my-first-project --interactive
 # - Claude settings
 
 # 2. Spawn your agents
-ntm spawn my-first-project --cc=2 --cod=1 --gmi=1
+ntm spawn my-first-project --cc=2 --cod=1 --gmi=1 --oc=1
 
 # 3. Start building!
 ntm send my-first-project "Let's build something awesome.
