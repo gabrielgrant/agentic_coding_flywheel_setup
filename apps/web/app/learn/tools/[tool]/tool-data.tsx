@@ -17,6 +17,7 @@ export type ToolId =
   | "claude-code"
   | "codex-cli"
   | "gemini-cli"
+  | "opencode"
   | "ntm"
   | "beads"
   | "agent-mail"
@@ -82,7 +83,19 @@ export const TOOLS: Record<ToolId, ToolCard> = {
     docsUrl: "https://github.com/google-gemini/gemini-cli",
     docsLabel: "GitHub",
     quickCommand: "gmi",
-    relatedTools: ["claude-code", "codex-cli", "ntm"],
+    relatedTools: ["claude-code", "codex-cli", "opencode", "ntm"],
+  },
+  opencode: {
+    id: "opencode",
+    title: "OpenCode",
+    tagline: "Open source, provider-agnostic AI coding agent",
+    icon: <Bot className="h-8 w-8" aria-hidden="true" />,
+    gradient: "from-violet-500/20 via-purple-500/20 to-violet-500/20",
+    glowColor: "rgba(139,92,246,0.4)",
+    docsUrl: "https://opencode.ai/docs",
+    docsLabel: "OpenCode Docs",
+    quickCommand: "opencode",
+    relatedTools: ["claude-code", "codex-cli", "gemini-cli", "ntm"],
   },
   ntm: {
     id: "ntm",

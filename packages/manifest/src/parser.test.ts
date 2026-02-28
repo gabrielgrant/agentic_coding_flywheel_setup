@@ -83,6 +83,7 @@ describe('parseManifestFile with real manifest', () => {
     expect(moduleIds.has('agents.claude')).toBe(true);
     expect(moduleIds.has('agents.codex')).toBe(true);
     expect(moduleIds.has('agents.gemini')).toBe(true);
+    expect(moduleIds.has('agents.opencode')).toBe(true);
   });
 
   test('dependencies reference existing modules', () => {

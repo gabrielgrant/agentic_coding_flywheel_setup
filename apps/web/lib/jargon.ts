@@ -321,7 +321,7 @@ export const jargonDictionary: Record<string, JargonTerm> = {
     long: "AI agents are programs that combine large AI models (the technology behind ChatGPT, Claude, etc.) with the ability to take actions in the real world: writing and modifying code, creating and editing files, running programs, searching the internet, and more. The word 'agent' emphasizes that these programs have agency; they can decide what to do next based on results, recover when something goes wrong, and pursue multi-step goals. For example, if you ask an AI agent to 'add user authentication to this application,' it might: search the codebase to understand its structure, decide which authentication approach fits best, write the necessary code across multiple files, test that it works, and report back with a summary. Each step involves decisions the agent makes independently.",
     analogy: "Regular AI is like a brilliant consultant who sits in a chair and answers questions. AI agents are like that same brilliant consultant, but now they can get up, walk around your office, use your computer, look through your files, and actually do work. They still need your guidance on what work to do, but they can execute tasks independently rather than just advising you on how to do them yourself.",
     why: "AI agents are the core of what this setup enables. Once your cloud server is configured with these tools, AI agents can work on your projects: writing code, fixing problems, running tests, and building features. You become like a manager directing a team, deciding priorities and reviewing work, rather than doing every task personally. This doesn't replace understanding what's being built; you're deeply involved in guiding and reviewing. But the agents handle execution.",
-    related: ["agentic", "claude-code", "codex", "gemini-cli"],
+    related: ["agentic", "claude-code", "codex", "gemini-cli", "opencode"],
   },
 
   "claude-code": {
@@ -340,6 +340,15 @@ export const jargonDictionary: Record<string, JargonTerm> = {
     analogy: "If Claude Code is like having one brilliant developer available to help, Codex is like having a second brilliant developer from a different background. They might approach problems differently, have different knowledge, or excel at different types of tasks. Having both available means you can get diverse perspectives and choose the best solution.",
     why: "Having multiple AI assistants gives you flexibility. Sometimes one model produces better results for a particular task, or you want to compare approaches. The Agent Flywheel installs Codex alongside Claude Code so you can easily switch between them or even use them on different parts of a project.",
     related: ["ai-agents", "claude-code", "gemini-cli"],
+  },
+
+  "opencode": {
+    term: "OpenCode",
+    short: "Open source, provider-agnostic AI coding agent",
+    long: "OpenCode is a 100% open source AI coding agent built by the creators of terminal.shop. Unlike Claude Code, Codex, and Gemini CLI which are each tied to a specific AI provider, OpenCode works with any AI backend: Anthropic, OpenAI, Google, or even local models running on your own machine. It runs in your terminal, can read and edit your project files, run commands, and help with development tasks. Because it's open source and provider-agnostic, you can use it with whatever model subscription you already have, and swap models as the AI landscape evolves.",
+    analogy: "If Claude Code, Codex, and Gemini are like hiring developers who each insist on their own specific toolbox, OpenCode is like hiring a developer who can use any toolbox. They adapt to whatever tools are available rather than requiring a specific setup.",
+    why: "OpenCode gives you flexibility. You can point it at whichever AI provider you already have access to, avoiding the need for additional subscriptions. Being open source also means the community can inspect, audit, and improve it. It's a good choice when you want to reduce vendor lock-in or experiment with different models.",
+    related: ["ai-agents", "claude-code", "codex", "gemini-cli"],
   },
 
   "gemini-cli": {

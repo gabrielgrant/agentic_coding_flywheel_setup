@@ -712,6 +712,40 @@ modules:
     verify:
       - ~/.local/bin/gemini --version || ~/.local/bin/gemini --help
 
+  - id: agents.opencode
+    description: OpenCode
+    category: agents
+    phase: 7
+    run_as: target_user
+    optional: false
+    enabled_by_default: true
+    tags: [recommended, agent]
+    dependencies:
+      - lang.bun
+    installed_check:
+      run_as: target_user
+      command: "test -x ~/.local/bin/opencode"
+    install:
+      # Install via bun, then create wrapper that uses bun as runtime (faster than node)
+      # Use --trust to allow postinstall scripts
+      - |
+        if ! ~/.bun/bin/bun install -g --trust opencode-ai@latest; then
+          echo "WARN: opencode-ai latest tag install failed; retrying opencode-ai" >&2
+          ~/.bun/bin/bun install -g --trust opencode-ai
+        fi
+      - |
+        mkdir -p ~/.local/bin
+        cat > ~/.local/bin/opencode << 'WRAPPER'
+        #!/bin/bash
+        exec ~/.bun/bin/bun ~/.bun/bin/opencode "$@"
+        WRAPPER
+        chmod +x ~/.local/bin/opencode
+    verify:
+      - ~/.local/bin/opencode --version || ~/.local/bin/opencode --help
+    notes:
+      - "Open source AI coding agent, provider-agnostic (supports Claude, OpenAI, Google, and local models)"
+      - "Binary installed to ~/.local/bin/opencode"
+
   # ============================================================
   # PHASE 8: Cloud & database tools
   # ============================================================
