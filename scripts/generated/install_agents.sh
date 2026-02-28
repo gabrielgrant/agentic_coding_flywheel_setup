@@ -93,7 +93,7 @@ acfs_security_init() {
 }
 
 # Category: agents
-# Modules: 3
+# Modules: 4
 
 # Claude Code
 install_agents_claude() {
@@ -287,12 +287,63 @@ INSTALL_AGENTS_GEMINI
     log_success "agents.gemini installed"
 }
 
+# OpenCode (sst/opencode)
+install_agents_opencode() {
+    local module_id="agents.opencode"
+    acfs_require_contract "module:${module_id}" || return 1
+    log_step "Installing agents.opencode"
+
+    if [[ "${DRY_RUN:-false}" = "true" ]]; then
+        log_info "dry-run: install: ~/.bun/bin/bun install -g opencode-ai@latest (target_user)"
+    else
+        if ! run_as_target_shell <<'INSTALL_AGENTS_OPENCODE'
+~/.bun/bin/bun install -g opencode-ai@latest
+INSTALL_AGENTS_OPENCODE
+        then
+            log_error "agents.opencode: install command failed: ~/.bun/bin/bun install -g opencode-ai@latest"
+            return 1
+        fi
+    fi
+    if [[ "${DRY_RUN:-false}" = "true" ]]; then
+        log_info "dry-run: install: mkdir -p ~/.local/bin (target_user)"
+    else
+        if ! run_as_target_shell <<'INSTALL_AGENTS_OPENCODE'
+mkdir -p ~/.local/bin
+cat > ~/.local/bin/opencode << 'WRAPPER'
+#!/bin/bash
+exec ~/.bun/bin/bun ~/.bun/bin/opencode "$@"
+WRAPPER
+chmod +x ~/.local/bin/opencode
+INSTALL_AGENTS_OPENCODE
+        then
+            log_error "agents.opencode: install command failed: mkdir -p ~/.local/bin"
+            return 1
+        fi
+    fi
+
+    # Verify
+    if [[ "${DRY_RUN:-false}" = "true" ]]; then
+        log_info "dry-run: verify: ~/.local/bin/opencode --version || ~/.local/bin/opencode --help (target_user)"
+    else
+        if ! run_as_target_shell <<'INSTALL_AGENTS_OPENCODE'
+~/.local/bin/opencode --version || ~/.local/bin/opencode --help
+INSTALL_AGENTS_OPENCODE
+        then
+            log_error "agents.opencode: verify failed: ~/.local/bin/opencode --version || ~/.local/bin/opencode --help"
+            return 1
+        fi
+    fi
+
+    log_success "agents.opencode installed"
+}
+
 # Install all agents modules
 install_agents() {
     log_section "Installing agents modules"
     install_agents_claude
     install_agents_codex
     install_agents_gemini
+    install_agents_opencode
 }
 
 # Run if executed directly

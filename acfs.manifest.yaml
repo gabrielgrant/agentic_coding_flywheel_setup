@@ -712,6 +712,32 @@ modules:
     verify:
       - ~/.local/bin/gemini --version || ~/.local/bin/gemini --help
 
+  - id: agents.opencode
+    description: OpenCode (sst/opencode)
+    category: agents
+    phase: 7
+    run_as: target_user
+    optional: false
+    enabled_by_default: true
+    tags: [recommended, agent]
+    dependencies:
+      - lang.bun
+    installed_check:
+      run_as: target_user
+      command: "test -x ~/.local/bin/opencode"
+    install:
+      # Install via bun global, then create a wrapper that uses bun as runtime
+      - ~/.bun/bin/bun install -g opencode-ai@latest
+      - |
+        mkdir -p ~/.local/bin
+        cat > ~/.local/bin/opencode << 'WRAPPER'
+        #!/bin/bash
+        exec ~/.bun/bin/bun ~/.bun/bin/opencode "$@"
+        WRAPPER
+        chmod +x ~/.local/bin/opencode
+    verify:
+      - ~/.local/bin/opencode --version || ~/.local/bin/opencode --help
+
   # ============================================================
   # PHASE 8: Cloud & database tools
   # ============================================================

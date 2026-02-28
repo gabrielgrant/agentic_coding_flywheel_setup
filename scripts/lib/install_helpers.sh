@@ -56,7 +56,7 @@ fi
 
 # Default categories array. Set via ACFS_GENERATED_DEFAULT_CATEGORIES in code,
 # or override at runtime with ACFS_GENERATED_MIGRATED_CATEGORIES env var (comma-separated).
-ACFS_GENERATED_DEFAULT_CATEGORIES=() # Empty until categories are explicitly migrated.
+ACFS_GENERATED_DEFAULT_CATEGORIES=("agents") # agents category uses generated installers by default
 
 _acfs_upper() {
     local s="${1:-}"
