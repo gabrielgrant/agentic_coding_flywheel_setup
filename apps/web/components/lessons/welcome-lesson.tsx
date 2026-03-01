@@ -73,15 +73,15 @@ export function WelcomeLesson() {
             />
             <FeatureCard
               icon={<Bot className="h-5 w-5" />}
-              title="Three Coding Agents"
-              description="Claude Code (cc), Codex CLI (cod), and Gemini CLI (gmi)"
+              title="Four Coding Agents"
+              description="Claude Code (cc), Codex CLI (cod), Gemini CLI (gmi), and OpenCode (opencode)"
               gradient="from-amber-500/20 to-orange-500/20"
             />
           </FeatureGrid>
         </div>
 
         {/* Agent Cards */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <AgentCard
             name="Claude Code"
             shortcut="cc"
@@ -96,6 +96,11 @@ export function WelcomeLesson() {
             name="Gemini CLI"
             shortcut="gmi"
             color="from-blue-500 to-indigo-500"
+          />
+          <AgentCard
+            name="OpenCode"
+            shortcut="opencode"
+            color="from-violet-500 to-purple-500"
           />
         </div>
       </Section>
@@ -152,7 +157,7 @@ export function WelcomeLesson() {
             },
             {
               title: "Agent commands",
-              description: "Talking to Claude, Codex, and Gemini",
+              description: "Talking to Claude, Codex, Gemini, and OpenCode",
             },
             {
               title: "NTM mastery",

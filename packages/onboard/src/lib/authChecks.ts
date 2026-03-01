@@ -174,6 +174,23 @@ export function createAuthChecks(overrides: Partial<AuthCheckDeps> = {}) {
     return { authenticated: false };
   };
 
+  const checkOpencode = (): AuthStatus => {
+    // opencode stores provider credentials in ~/.local/share/opencode/auth.json
+    const authPath = path.join(homedir, '.local', 'share', 'opencode', 'auth.json');
+    if (deps.existsSync(authPath)) {
+      const auth = safeReadJson<Record<string, unknown>>(deps.readFileSync, authPath);
+      if (auth && Object.keys(auth).length > 0) {
+        return { authenticated: true };
+      }
+    }
+    // Also accept a global config as indication of setup
+    const configPath = path.join(homedir, '.config', 'opencode', 'opencode.json');
+    if (deps.existsSync(configPath)) {
+      return { authenticated: true };
+    }
+    return { authenticated: false };
+  };
+
   const checkGitHub = (): AuthStatus => {
     if (deps.commandExists('gh')) {
       const output = runCommand('gh auth status -h github.com', { allowStderrFallback: true });
@@ -276,6 +293,7 @@ export function createAuthChecks(overrides: Partial<AuthCheckDeps> = {}) {
     'claude-code': checkClaude,
     'codex-cli': checkCodex,
     'gemini-cli': checkGemini,
+    'opencode': checkOpencode,
     github: checkGitHub,
     vercel: checkVercel,
     supabase: checkSupabase,

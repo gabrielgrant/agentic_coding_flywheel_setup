@@ -152,6 +152,24 @@ export const SERVICES: Service[] = [
     docsUrl: 'https://ai.google.dev/',
   },
 
+  {
+    id: 'opencode',
+    name: 'OpenCode',
+    provider: 'Anomaly Co',
+    logo: '/logos/opencode.svg',
+    category: 'agent',
+    priority: 'optional',
+    tier: 'recommended',
+    sortOrder: 4,
+    shortDescription: 'Open source, provider-agnostic AI coding agent',
+    whyNeeded: 'OpenCode is a 100% open source coding agent that works with any AI provider (Claude, OpenAI, Google, or local models). Great for flexibility and when you want to avoid vendor lock-in.',
+    signupUrl: 'https://opencode.ai/',
+    supportsGoogleSso: false,
+    postInstallCommand: 'opencode',
+    installedByAcfs: true,
+    docsUrl: 'https://opencode.ai/docs',
+  },
+
   // Developer Tools
   {
     id: 'github',

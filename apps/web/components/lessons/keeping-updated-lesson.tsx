@@ -89,7 +89,7 @@ export function KeepingUpdatedLesson() {
           <UpdateItem
             icon={<Bot className="h-4 w-4" />}
             label="Coding agents"
-            description="Claude, Codex, Gemini"
+            description="Claude, Codex, Gemini, OpenCode"
           />
           <UpdateItem
             icon={<Settings className="h-4 w-4" />}
@@ -221,7 +221,10 @@ claude update --channel latest
 bun install -g --trust @openai/codex@latest
 
 # Gemini
-bun install -g --trust @google/gemini-cli@latest`}
+bun install -g --trust @google/gemini-cli@latest
+
+# OpenCode
+bun install -g --trust opencode-ai@latest`}
           />
 
           <TroubleshootingCard

@@ -835,6 +835,7 @@ check_agents() {
     check_command "agent.claude" "Claude Code" "claude" "$(fix_for_module "agents.claude")"
     check_command "agent.codex" "Codex CLI" "codex" "$(fix_for_module "agents.codex")"
     check_command "agent.gemini" "Gemini CLI" "gemini" "$(fix_for_module "agents.gemini")"
+    check_command "agent.opencode" "OpenCode" "opencode" "$(fix_for_module "agents.opencode")"
 
     # Check aliases are defined in the zshrc
     local alias_fix
@@ -1598,6 +1599,7 @@ deep_check_agent_auth() {
     check_claude_auth
     check_codex_auth
     check_gemini_auth
+    check_opencode_auth
 }
 
 # check_claude_auth - Thorough Claude Code authentication check
@@ -1760,6 +1762,40 @@ check_gemini_auth() {
         check "deep.agent.gemini_auth" "Gemini CLI auth" "pass" "authenticated"
     else
         check "deep.agent.gemini_auth" "Gemini CLI auth" "warn" "not logged in" "Run 'gemini' to authenticate via browser"
+    fi
+}
+
+# check_opencode_auth - OpenCode authentication check
+# OpenCode stores provider credentials in ~/.local/share/opencode/auth.json
+# Returns via check(): pass (auth OK), warn (not configured)
+check_opencode_auth() {
+    # Skip if not installed
+    if ! command -v opencode &>/dev/null; then
+        check "deep.agent.opencode_auth" "OpenCode" "warn" "not installed" "bun install -g --trust opencode-ai@latest"
+        return
+    fi
+
+    # Check for auth.json (provider credentials)
+    local auth_file="$HOME/.local/share/opencode/auth.json"
+    local config_file="$HOME/.config/opencode/opencode.json"
+
+    local found_auth=false
+    if [[ -f "$auth_file" ]] && [[ -s "$auth_file" ]]; then
+        found_auth=true
+    fi
+    if [[ -f "$config_file" ]]; then
+        found_auth=true
+    fi
+
+    # Also accept environment variable as auth evidence
+    if [[ -n "${ANTHROPIC_API_KEY:-}" ]] || [[ -n "${OPENAI_API_KEY:-}" ]]; then
+        found_auth=true
+    fi
+
+    if [[ "$found_auth" == "true" ]]; then
+        check "deep.agent.opencode_auth" "OpenCode auth" "pass" "configured"
+    else
+        check "deep.agent.opencode_auth" "OpenCode auth" "warn" "not configured" "Run 'opencode' to set up a provider or set ANTHROPIC_API_KEY / OPENAI_API_KEY"
     fi
 }
 

@@ -1273,6 +1273,18 @@ update_agents() {
     else
         log_item "skip" "Gemini CLI" "not installed (use --force to install)"
     fi
+
+    # OpenCode via bun (provider-agnostic open source agent)
+    if cmd_exists opencode || [[ "$FORCE_MODE" == "true" ]]; then
+        capture_version_before "opencode"
+        run_cmd_bun_with_retry "OpenCode" "$bun_bin" install -g --trust opencode-ai@latest
+        # Show version change without double-counting
+        if capture_version_after "opencode"; then
+            [[ "$QUIET" != "true" ]] && printf "       ${DIM}%s → %s${NC}\n" "${VERSION_BEFORE[opencode]}" "${VERSION_AFTER[opencode]}"
+        fi
+    else
+        log_item "skip" "OpenCode" "not installed (use --force to install)"
+    fi
 }
 
 # Helper for Claude update with proper error handling
@@ -2265,6 +2277,7 @@ WHAT EACH CATEGORY UPDATES:
   agents:   Claude Code (verified installer: curl claude.ai/install.sh | bash -- latest)
             Codex CLI (bun install -g --trust @openai/codex@latest)
             Gemini CLI (bun install -g --trust @google/gemini-cli@latest)
+            OpenCode (bun install -g --trust opencode-ai@latest)
   cloud:    Wrangler, Vercel (bun install -g --trust <pkg>@latest)
             Supabase CLI (verified GitHub release tarball + sha256 checksums)
             GitHub CLI (gh extension upgrade --all)

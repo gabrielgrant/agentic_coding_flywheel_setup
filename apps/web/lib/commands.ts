@@ -90,6 +90,15 @@ export const COMMANDS: CommandRef[] = [
     docsUrl: "/learn/agent-commands",
   },
   {
+    name: "opencode",
+    fullName: "OpenCode",
+    description: "Open source, provider-agnostic coding agent.",
+    category: "agents",
+    example: 'opencode "refactor this module"',
+    aliases: ["oc"],
+    docsUrl: "/learn/agent-commands",
+  },
+  {
     name: "rg",
     fullName: "ripgrep",
     description: "Ultra-fast code search.",

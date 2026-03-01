@@ -37,7 +37,7 @@ Verifies all required tools are installed.
 ### Create a Project Session
 
 ```bash
-ntm spawn myproject --cc=2 --cod=1 --gmi=1
+ntm spawn myproject --cc=2 --cod=1 --gmi=1 --oc=1
 ```
 
 This creates:
@@ -45,6 +45,7 @@ This creates:
 - 2 Claude Code panes
 - 1 Codex pane
 - 1 Gemini pane
+- 1 OpenCode pane
 
 ### List Sessions
 
@@ -101,6 +102,12 @@ Why this ratio?
 - **2 Claude** - Great for architecture and complex reasoning
 - **1 Codex** - Fast iteration and testing
 - **1 Gemini** - Different perspective, good for docs
+
+Add `--oc=1` to include OpenCode as a provider-agnostic alternative:
+
+```bash
+ntm spawn myproject --cc=2 --cod=1 --gmi=1 --oc=1
+```
 
 ---
 

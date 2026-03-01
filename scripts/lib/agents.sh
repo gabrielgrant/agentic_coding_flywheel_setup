@@ -2,7 +2,7 @@
 # shellcheck disable=SC1091
 # ============================================================
 # ACFS Installer - Coding Agents Library
-# Installs Claude Code, Codex CLI, and Gemini CLI
+# Installs Claude Code, Codex CLI, Gemini CLI, and OpenCode
 # ============================================================
 
 AGENTS_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -26,11 +26,13 @@ if [[ -n "$CODEX_FALLBACK_VERSION" ]]; then
     CODEX_FALLBACK_PACKAGE="@openai/codex@${CODEX_FALLBACK_VERSION}"
 fi
 GEMINI_PACKAGE="@google/gemini-cli@latest"
+OPENCODE_PACKAGE="opencode-ai@latest"
 
 # Binary names after installation
 CLAUDE_BIN="claude"
 CODEX_BIN="codex"
 GEMINI_BIN="gemini"
+OPENCODE_BIN="opencode"
 
 # ============================================================
 # Helper Functions
@@ -422,6 +424,65 @@ upgrade_gemini_cli() {
     fi
 }
 
+# Install OpenCode via bun (provider-agnostic open source agent)
+install_opencode_cli() {
+    local target_user="${TARGET_USER:-ubuntu}"
+    local target_home="${TARGET_HOME:-/home/$target_user}"
+    local bun_bin
+    bun_bin=$(_agent_get_bun_bin)
+
+    local opencode_bin="$target_home/.bun/bin/$OPENCODE_BIN"
+    local opencode_wrapper="$target_home/.local/bin/opencode"
+
+    if [[ -x "$opencode_wrapper" ]]; then
+        log_detail "OpenCode already installed at $opencode_wrapper"
+        return 0
+    fi
+
+    if [[ -x "$opencode_bin" ]]; then
+        log_detail "OpenCode already installed at $opencode_bin"
+        _agent_create_bun_wrapper "$target_home" "opencode"
+        return 0
+    fi
+
+    if ! _agent_check_bun; then
+        return 1
+    fi
+
+    log_detail "Installing OpenCode for $target_user..."
+    if _agent_run_as_user "\"$bun_bin\" install -g --trust $OPENCODE_PACKAGE"; then
+        if [[ -x "$opencode_bin" ]]; then
+            _agent_create_bun_wrapper "$target_home" "opencode"
+            log_success "OpenCode installed"
+            log_detail "Note: Run 'opencode' to set up a provider (or set ANTHROPIC_API_KEY/OPENAI_API_KEY)"
+            return 0
+        fi
+    fi
+
+    log_warn "OpenCode installation may have failed"
+    return 1
+}
+
+# Upgrade OpenCode to latest version
+upgrade_opencode_cli() {
+    local target_user="${TARGET_USER:-ubuntu}"
+    local bun_bin
+    bun_bin=$(_agent_get_bun_bin)
+
+    if ! _agent_check_bun; then
+        return 1
+    fi
+
+    log_detail "Upgrading OpenCode..."
+    if _agent_run_as_user "\"$bun_bin\" install -g --trust $OPENCODE_PACKAGE"; then
+        log_success "OpenCode upgraded"
+        return 0
+    else
+        log_warn "OpenCode upgrade failed"
+        return 1
+    fi
+}
+
 # ============================================================
 # Verification Functions
 # ============================================================
@@ -470,6 +531,16 @@ verify_agents() {
         all_pass=false
     fi
 
+    # Check OpenCode
+    if [[ -x "$bun_bin_dir/$OPENCODE_BIN" ]]; then
+        local version
+        version=$(_agent_run_as_user "\"$bun_bin_dir/$OPENCODE_BIN\" --version" 2>/dev/null || echo "installed")
+        log_detail "  opencode: $version"
+    else
+        log_warn "  Missing: opencode (OpenCode) - optional"
+        # OpenCode is optional; do not mark all_pass=false
+    fi
+
     if [[ "$all_pass" == "true" ]]; then
         log_success "All coding agents verified"
         log_detail "Note: Each agent requires login before use"
@@ -510,6 +581,14 @@ check_agent_auth() {
     else
         log_warn "  Gemini: not configured (run 'gemini' to login via browser)"
     fi
+
+    # OpenCode: Check for provider credentials in ~/.local/share/opencode/auth.json
+    if [[ -f "$target_home/.local/share/opencode/auth.json" ]] || \
+       [[ -f "$target_home/.config/opencode/opencode.json" ]]; then
+        log_detail "  OpenCode: configured"
+    else
+        log_warn "  OpenCode: not configured (run 'opencode' or set ANTHROPIC_API_KEY/OPENAI_API_KEY)"
+    fi
 }
 
 # Get versions of installed agents (for doctor output)
@@ -533,6 +612,9 @@ get_agent_versions() {
     if [[ -x "$bun_bin_dir/$GEMINI_BIN" ]]; then
         echo "  gemini: $(_agent_run_as_user "\"$bun_bin_dir/$GEMINI_BIN\" --version" 2>/dev/null || echo 'installed')"
     fi
+    if [[ -x "$bun_bin_dir/$OPENCODE_BIN" ]]; then
+        echo "  opencode: $(_agent_run_as_user "\"$bun_bin_dir/$OPENCODE_BIN\" --version" 2>/dev/null || echo 'installed')"
+    fi
 }
 
 # ============================================================
@@ -555,15 +637,18 @@ upgrade_all_agents() {
     if ! upgrade_gemini_cli; then
         ((failed++))
     fi
+    if ! upgrade_opencode_cli; then
+        ((failed++))
+    fi
 
     if ((failed == 0)); then
         log_success "All coding agents upgraded"
         return 0
-    elif ((failed == 3)); then
+    elif ((failed == 4)); then
         log_error "All agent upgrades failed"
         return 1
     else
-        log_warn "Some agent upgrades failed ($failed of 3)"
+        log_warn "Some agent upgrades failed ($failed of 4)"
         return 1
     fi
 }
@@ -587,6 +672,7 @@ install_all_agents() {
     install_claude_code
     install_codex_cli
     install_gemini_cli
+    install_opencode_cli
 
     # Verify installation
     verify_agents
@@ -594,9 +680,10 @@ install_all_agents() {
     # Note about authentication
     echo ""
     log_detail "Next steps: Login to each agent"
-    log_detail "  • Claude: Run 'claude' and follow prompts"
-    log_detail "  • Codex:  Run 'codex login' (uses ChatGPT Pro account, not API key)"
-    log_detail "  • Gemini: Run 'gemini' and complete Google login"
+    log_detail "  • Claude:    Run 'claude' and follow prompts"
+    log_detail "  • Codex:     Run 'codex login' (uses ChatGPT Pro account, not API key)"
+    log_detail "  • Gemini:    Run 'gemini' and complete Google login"
+    log_detail "  • OpenCode:  Run 'opencode' or set ANTHROPIC_API_KEY/OPENAI_API_KEY"
     echo ""
 
     log_success "Coding agents installation complete"

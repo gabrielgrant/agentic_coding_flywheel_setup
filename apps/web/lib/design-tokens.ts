@@ -258,6 +258,7 @@ export const toolColors = {
   claudeCode: "oklch(0.78 0.16 75)",
   codexCli: "oklch(0.72 0.19 145)",
   geminiCli: "oklch(0.75 0.18 195)",
+  opencode: "oklch(0.73 0.20 270)",
   bun: "oklch(0.78 0.16 75)",
   rust: "oklch(0.65 0.22 25)",
   go: "oklch(0.75 0.18 195)",

@@ -211,12 +211,20 @@ export default function LaunchOnboardingPage() {
                 <CommandCard command="gemini" description="Follow the prompts to authenticate (Google account)." runLocation="vps" />
               </div>
             </div>
+            <div className="flex gap-3">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[oklch(0.78_0.16_75)] text-[oklch(0.15_0.02_75)] font-bold text-sm">4</div>
+              <div>
+                <p className="font-medium">OpenCode (optional, open source)</p>
+                <CommandCard command="opencode" description="Provider-agnostic agent. On first run it guides you through selecting a provider, or set ANTHROPIC_API_KEY / OPENAI_API_KEY." runLocation="vps" />
+              </div>
+            </div>
           </div>
           <GuideTip>
             After authenticating, you can use the shortcuts (vibe mode):{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">cc</code> (Claude),{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">cod</code> (Codex),{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">gmi</code> (Gemini).
+            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">gmi</code> (Gemini),{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">opencode</code> (OpenCode).
           </GuideTip>
         </div>
       </Card>

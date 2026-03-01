@@ -5,7 +5,7 @@
 # Usage:
 #   - `ntm palette [session]` (or press the tmux popup key after `ntm bind`, default: F6)
 #   - In the palette: type to filter, `1-9` quick-select, `Enter` select, `?` for help
-#   - Target selection: press `1-4` to choose recipients (All / Claude / Codex / Gemini)
+#   - Target selection: press `1-4` to choose recipients (All / Claude / Codex / Gemini / OpenCode)
 #
 # Preview pane:
 #   - Shows targets + prompt metadata (lines/chars) and lightweight warning badges.

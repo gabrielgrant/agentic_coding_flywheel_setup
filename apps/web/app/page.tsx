@@ -219,11 +219,11 @@ const FEATURES = [
   },
   {
     icon: <Cpu className="h-6 w-6" />,
-    title: "Three AI Agents",
+    title: "Four AI Agents",
     description: (
       <>
-        <Jargon term="claude-code">Claude Code</Jargon>, <Jargon term="codex">Codex CLI</Jargon>, and{" "}
-        <Jargon term="gemini-cli">Gemini CLI</Jargon>, all configured with optimal settings for coding.
+        <Jargon term="claude-code">Claude Code</Jargon>, <Jargon term="codex">Codex CLI</Jargon>,{" "}
+        <Jargon term="gemini-cli">Gemini CLI</Jargon>, and <Jargon term="opencode">OpenCode</Jargon>, all configured with optimal settings for coding.
       </>
     ),
     gradient: "bg-[oklch(0.7_0.2_330)]",
@@ -1013,7 +1013,7 @@ export default function HomePage() {
                 Transform a fresh <Jargon term="cloud-server">cloud server</Jargon> into a fully-configured{" "}
                 <Jargon term="agentic">agentic</Jargon> coding environment.{" "}
                 <Jargon term="claude-code">Claude Code</Jargon>, OpenAI <Jargon term="codex">Codex</Jargon>,{" "}
-                Google <Jargon term="gemini-cli">Gemini</Jargon>: all pre-configured with 30+ modern developer tools.
+                Google <Jargon term="gemini-cli">Gemini</Jargon>, and <Jargon term="opencode">OpenCode</Jargon>: all pre-configured with 30+ modern developer tools.
                 All totally free and <Jargon term="open-source">open-source</Jargon>.
               </motion.p>
 
