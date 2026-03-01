@@ -126,7 +126,12 @@ After logging in, **immediately** back up your credentials:
 caam backup claude my-main-account
 caam backup codex my-main-account
 caam backup gemini my-main-account
-# Note: OpenCode stores credentials in ~/.local/share/opencode/auth.json
+# OpenCode isn't yet supported by CAAM
+# TODO: update this message when upstream support is landed:
+# https://github.com/Dicklesworthstone/coding_agent_account_manager/issues/8
+#
+# OpenCode credentials are stored in ~/.local/share/opencode/auth.json
+# if you want to back them up/swap manually
 ```
 
 Now you can switch accounts later with:
