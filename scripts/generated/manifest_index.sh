@@ -6,7 +6,7 @@
 # ============================================================
 # Data-only manifest index. Safe to source.
 
-ACFS_MANIFEST_SHA256="be99e8fe3858eb9018e6f4f6bfe18d97e333a634882d607597bfaf04b85dfc08"
+ACFS_MANIFEST_SHA256="256b76f0e39878106d89bd2cca574a39628f606d6a3c64ba599145c64081433f"
 
 ACFS_MODULES_IN_ORDER=(
   "base.system"
@@ -478,7 +478,7 @@ declare -gA ACFS_MODULE_DESC=(
   [agents.claude]="Claude Code"
   [agents.codex]="OpenAI Codex CLI"
   [agents.gemini]="Google Gemini CLI"
-  [agents.opencode]="OpenCode (sst/opencode)"
+  [agents.opencode]="OpenCode"
   [tools.vault]="HashiCorp Vault CLI"
   [db.postgres18]="PostgreSQL 18"
   [cloud.wrangler]="Cloudflare Wrangler CLI"

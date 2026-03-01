@@ -53,14 +53,14 @@ The installer is **idempotent**—if interrupted, simply re-run it. It will auto
 
 **Why you'd care:**
 - **Zero to Hero:** Takes complete beginners from "I have a laptop" to "I have Claude/Codex/Gemini agents writing code for me on a VPS"
-- **One-Liner Magic:** A single `curl | bash` command installs 30+ tools, configures everything, and sets up three AI coding agents
+- **One-Liner Magic:** A single `curl | bash` command installs 30+ tools, configures everything, and sets up four AI coding agents
 - **Vibe Mode:** Pre-configured for maximum velocity—passwordless sudo, dangerous agent flags enabled, optimized shell environment
 - **Battle-Tested Stack:** Includes the complete Dicklesworthstone stack (10 tools + utilities) for agent orchestration, coordination, and safety
 
 **What you get:**
 - Modern shell (zsh + oh-my-zsh + powerlevel10k)
 - All language runtimes (bun, uv/Python, Rust, Go)
-- Three AI coding agents (Claude Code, Codex CLI, Gemini CLI)
+- Four AI coding agents (Claude Code, Codex CLI, Gemini CLI, OpenCode)
 - Agent coordination tools (NTM, MCP Agent Mail, SLB)
 - Cloud CLIs (Vault, Wrangler, Supabase, Vercel)
 - And 20+ more developer tools
@@ -125,7 +125,7 @@ ACFS includes a **step-by-step wizard website** at [agent-flywheel.com](https://
 7. Starting to code with AI agents
 
 ### For Developers
-ACFS is a **one-liner** that transforms any fresh Ubuntu VPS into a fully-configured development environment with modern tooling and three AI coding agents ready to go.
+ACFS is a **one-liner** that transforms any fresh Ubuntu VPS into a fully-configured development environment with modern tooling and four AI coding agents ready to go.
 
 ### For Teams
 ACFS provides a **reproducible, idempotent** setup that ensures every team member's VPS environment is identical—eliminating "works on my machine" for agentic workflows.
@@ -171,7 +171,7 @@ flowchart TB
     AcfsHome["~/.acfs/<br/>configs + scripts + state.json"]
     Commands["Commands<br/>acfs doctor / acfs update / acfs services-setup / onboard"]
     Tools["Installed tools<br/>bun/uv/rust/go + tmux/rg/gh + vault + ..."]
-    Agents["Agent CLIs<br/>claude / codex / gemini"]
+    Agents["Agent CLIs<br/>claude / codex / gemini / opencode"]
     Stack["Stack tools<br/>ntm / mcp_agent_mail / ubs / bv / cass / cm / caam / slb / dcg / ru"]
   end
 
@@ -466,7 +466,7 @@ graph TD
     C["Phase 3: Shell Setup<br/><small>zsh, oh-my-zsh, powerlevel10k</small>"]
     D["Phase 4: CLI Tools<br/><small>ripgrep, fzf, lazygit, etc.</small>"]
     E["Phase 5: Language Runtimes<br/><small>bun, uv, rust, go</small>"]
-    F["Phase 6: AI Agents<br/><small>claude, codex, gemini</small>"]
+    F["Phase 6: AI Agents<br/><small>claude, codex, gemini, opencode</small>"]
     G["Phase 7: Cloud Tools<br/><small>vault, wrangler, supabase, vercel</small>"]
     H["Phase 8: Dicklesworthstone Stack<br/><small>ntm, dcg, ru, ubs, mcp_agent_mail, etc.</small>"]
     I["Phase 9: Configuration<br/><small>Deploy acfs.zshrc, tmux.conf</small>"]
@@ -848,9 +848,10 @@ Example output:
 ║  ACFS Cheatsheet                                               ║
 ╠═══════════════════════════════════════════════════════════════╣
 ║  Agents                                                        ║
-║    cc   → claude --dangerously-skip-permissions                ║
-║    cod  → codex --dangerously-bypass-approvals-and-sandbox     ║
-║    gmi  → gemini --yolo                                        ║
+║    cc       → claude --dangerously-skip-permissions            ║
+║    cod      → codex --dangerously-bypass-approvals-and-sandbox ║
+║    gmi      → gemini --yolo                                    ║
+║    opencode → opencode (provider-agnostic, alias: oc)          ║
 ║                                                                ║
 ║  Git                                                           ║
 ║    gs   → git status                                           ║
@@ -950,7 +951,7 @@ The [Command Reference](https://agent-flywheel.com/learn/commands) documents eve
 
 | Category | Commands |
 |----------|----------|
-| **Agents** | `cc`, `cod`, `gmi` |
+| **Agents** | `cc`, `cod`, `gmi`, `opencode` |
 | **Search** | `rg`, `fd`, `sg`, `fzf` |
 | **Git** | `lg`, `gh`, `git-lfs` |
 | **System** | `z`, `bat`, `lsd`, `atuin`, `tmux` |
@@ -1117,7 +1118,7 @@ onboard --reset        # Reset progress and start fresh
 | 1 | Linux Navigation | 5 min | Filesystem, basic commands |
 | 2 | SSH & Persistence | 4 min | Keys, config, tunnels, screen/tmux |
 | 3 | tmux Basics | 6 min | Sessions, windows, panes, navigation |
-| 4 | Agent Commands | 5 min | `cc`, `cod`, `gmi` aliases |
+| 4 | Agent Commands | 5 min | `cc`, `cod`, `gmi`, `opencode` aliases |
 | 5 | NTM Core | 7 min | Named Tmux Manager basics |
 | 6 | NTM Prompt Palette | 5 min | Command palette features |
 | 7 | Flywheel Loop | 8 min | Complete agentic workflow |
@@ -1227,6 +1228,7 @@ Benefits for agentic workflows:
 | **Claude Code** | `claude` | `cc` (dangerous mode) |
 | **Codex CLI** | `codex` | `cod` (dangerous mode) |
 | **Gemini CLI** | `gemini` | `gmi` (dangerous mode) |
+| **OpenCode** | `opencode` | `oc` (open source, provider-agnostic) |
 
 **Vibe Mode Aliases:**
 ```bash
@@ -1238,6 +1240,9 @@ alias cod='codex --dangerously-bypass-approvals-and-sandbox'
 
 # Gemini with yolo mode
 alias gmi='gemini --yolo'
+
+# OpenCode (provider-agnostic, configure via ~/.config/opencode/opencode.json)
+alias oc='opencode'
 ```
 
 **Installation & Updates:**
@@ -1324,6 +1329,7 @@ $ acfs doctor
 ║   ✔ claude 1.0.24                                             ║
 ║   ✔ codex 0.1.2504252326                                      ║
 ║   ✔ gemini 0.1.12                                             ║
+║   ✔ opencode 0.3.1                                            ║
 ║                                                               ║
 ║ Cloud                                                         ║
 ║   ✔ vault 1.18.3                                              ║
@@ -2830,7 +2836,7 @@ Currently, ACFS installs the full suite. Future versions will support:
 
 ### The Problem: The Agentic Coding Barrier
 
-The rise of AI coding agents (Claude Code, Codex CLI, Gemini CLI) has created a new paradigm in software development. These agents can write code, debug issues, and even architect solutions—but only if they have the right environment.
+The rise of AI coding agents (Claude Code, Codex CLI, Gemini CLI, OpenCode) has created a new paradigm in software development. These agents can write code, debug issues, and even architect solutions—but only if they have the right environment.
 
 **The barrier isn't the agents themselves.** It's the **hours of setup** required to create an environment where agents can actually be productive:
 
@@ -3050,7 +3056,7 @@ scripts/generated/
 ├── install_network.sh     # Tailscale
 ├── install_lang.sh        # bun, uv, rust, go
 ├── install_tools.sh       # ast-grep, atuin, zoxide
-├── install_agents.sh      # claude, codex, gemini
+├── install_agents.sh      # claude, codex, gemini, opencode
 ├── install_db.sh          # PostgreSQL 18, Vault
 ├── install_cloud.sh       # wrangler, supabase, vercel
 ├── install_stack.sh       # Dicklesworthstone 10-tool stack + utilities
@@ -3127,7 +3133,7 @@ ACFS_MODULE_DEFAULT["db.postgres18"]="true"
 **Runtime Query Functions:**
 ```bash
 # Get all modules in a category
-get_modules_by_category "agents"  # Returns: agents.claude agents.codex agents.gemini
+get_modules_by_category "agents"  # Returns: agents.claude agents.codex agents.gemini agents.opencode
 
 # Check if module is default-installed
 is_default_module "tools.vault"   # Returns: true

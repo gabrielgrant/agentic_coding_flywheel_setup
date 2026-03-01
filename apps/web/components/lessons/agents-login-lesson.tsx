@@ -30,18 +30,17 @@ export function AgentsLoginLesson() {
         Login to your coding agents and understand the shortcuts.
       </GoalBanner>
 
-      {/* The Three Agents */}
+      {/* The Four Agents */}
       <Section
-        title="The Three Agents"
+        title="The Four Agents"
         icon={<Bot className="h-5 w-5" />}
         delay={0.1}
       >
         <Paragraph>
-          You have three powerful coding agents installed, each from a different
-          AI company:
+          You have four powerful coding agents installed:
         </Paragraph>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <AgentInfoCard
             name="Claude Code"
             command="claude"
@@ -65,6 +64,14 @@ export function AgentsLoginLesson() {
             company="Google"
             gradient="from-blue-500 to-indigo-500"
             delay={0.3}
+          />
+          <AgentInfoCard
+            name="OpenCode"
+            command="opencode"
+            alias="oc"
+            company="Anomaly Co"
+            gradient="from-violet-500 to-purple-500"
+            delay={0.4}
           />
         </div>
       </Section>
@@ -114,6 +121,18 @@ export function AgentsLoginLesson() {
             features={["YOLO mode (no confirmations)"]}
             gradient="from-blue-500/20 to-indigo-500/20"
           />
+
+          <AliasCard
+            alias="opencode"
+            name="OpenCode"
+            code="opencode"
+            features={[
+              "Open source, provider-agnostic",
+              "Works with Claude, OpenAI, Google, or local models",
+              "Configure via ~/.config/opencode/opencode.json",
+            ]}
+            gradient="from-violet-500/20 to-purple-500/20"
+          />
         </div>
       </Section>
 
@@ -149,6 +168,14 @@ export function AgentsLoginLesson() {
             description="Follow the prompts to authenticate with your Google account."
             gradient="from-blue-500/10 to-indigo-500/10"
           />
+
+          {/* OpenCode Login */}
+          <LoginStep
+            agent="OpenCode"
+            command="opencode"
+            description="OpenCode is provider-agnostic. On first run it guides you through adding a provider. You can also set ANTHROPIC_API_KEY or OPENAI_API_KEY and OpenCode picks it up automatically."
+            gradient="from-violet-500/10 to-purple-500/10"
+          />
         </div>
       </Section>
 
@@ -169,7 +196,8 @@ export function AgentsLoginLesson() {
           <CodeBlock
             code={`caam backup claude my-main-account
 caam backup codex my-main-account
-caam backup gemini my-main-account`}
+caam backup gemini my-main-account
+# Note: OpenCode stores credentials in ~/.local/share/opencode/auth.json`}
           />
         </div>
 
@@ -201,6 +229,7 @@ caam backup gemini my-main-account`}
           <CodeBlock code={`cc "Hello! Please confirm you're working."`} />
           <CodeBlock code={`cod "Hello! Please confirm you're working."`} />
           <CodeBlock code={`gmi "Hello! Please confirm you're working."`} />
+          <CodeBlock code={`opencode "Hello! Please confirm you're working."`} />
         </div>
       </Section>
 
@@ -247,7 +276,7 @@ caam backup gemini my-main-account`}
         <div className="mt-6">
           <CodeBlock
             code={`# Check which agents are installed
-$ which claude codex gemini
+$ which claude codex gemini opencode
 
 # Check your agent credential backups
 $ caam ls
