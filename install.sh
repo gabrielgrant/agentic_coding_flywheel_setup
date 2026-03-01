@@ -5,7 +5,7 @@
 # Main installer script
 #
 # Usage:
-#   curl -fsSL "https://raw.githubusercontent.com/gabrielgrant/agentic_coding_flywheel_setup/main/install.sh?$(date +%s)" | bash -s -- --yes --mode vibe
+#   curl -fsSL "https://raw.githubusercontent.com/Dicklesworthstone/agentic_coding_flywheel_setup/main/install.sh?$(date +%s)" | bash -s -- --yes --mode vibe
 #
 # Options:
 #   --yes         Skip all prompts, use defaults
@@ -50,7 +50,7 @@ export DEBCONF_NONINTERACTIVE_SEEN=true
 # ============================================================
 ACFS_VERSION="0.5.0"
 # Allow fork installations by overriding these via environment variables
-ACFS_REPO_OWNER="${ACFS_REPO_OWNER:-gabrielgrant}"
+ACFS_REPO_OWNER="${ACFS_REPO_OWNER:-Dicklesworthstone}"
 ACFS_REPO_NAME="${ACFS_REPO_NAME:-agentic_coding_flywheel_setup}"
 ACFS_REF="${ACFS_REF:-main}"
 # Preserve the original ref (branch/tag/sha) before resolving to a commit SHA.
